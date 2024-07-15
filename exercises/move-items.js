@@ -12,7 +12,7 @@
  */
 
 // Your code goes here...
-
+const allItems = document.querySelectorAll('.item');
 
 
 /**
@@ -23,7 +23,7 @@
  * */
 
 // Your code goes here
-
+const mainContainer = document.getElementById('main');
 
 
 /**
@@ -34,7 +34,7 @@
  */
 
 // Your code goes here
-
+const favsContainer = document.getElementById('favs');
 
 
 /**
@@ -47,7 +47,27 @@
  */
 
 // Your code goes here
+function updateCollections(id, direction) {
+  const item = document.getElementById(`${id}`);
 
+  if (!item) {
+    console.error(`Item with the id of 'item${id} was not found'`);
+    return;
+  }
+
+  if (direction === 'toMain') {
+    mainContainer.appendChild(item);
+    item.classList.remove('fa-heart-crack');
+    item.classList.add('fa-heart-circle-plus');
+  } else if (direction === 'toFavs') {
+    favsContainer.appendChild(item);
+    item.classList.remove('fa-heart-circle-plus');
+    item.classList.add('fa-heart-crack');
+  } else {
+    console.error(`Invalid direction, use toMain or toFavs`);
+  }
+
+}
 
 
 /**
@@ -65,5 +85,9 @@
  */
 
 // Your code goes here...
+
+allItems.forEach((item) => {
+  
+})
 
 
