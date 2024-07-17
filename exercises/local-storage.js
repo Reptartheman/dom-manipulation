@@ -38,3 +38,18 @@
  */
 
 // Your code goes here...
+
+const cardsContainer = document.querySelector('.cardsContainer');
+const allCards = document.querySelectorAll('.item');
+const cardsArray = Array.from(allCards);
+const getFavorites = localStorage.getItem('favorites');
+
+function changeBackgroundColor(e) {
+  const card = e.target
+
+  localStorage.setItem('favorite', card.id);
+
+}
+
+cardsContainer.addEventListener('click', changeBackgroundColor);
+

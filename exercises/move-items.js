@@ -49,7 +49,7 @@ const favsContainer = document.getElementById('favs');
 // Your code goes here
 function updateCollections(id, direction) {
   const item = document.getElementById(id);
-  const icon = item.querySelector('i')
+  const icon = item.querySelector('i');
   if (!item) {
     console.error(`Item with the id of 'item${id} was not found'`);
     return;
