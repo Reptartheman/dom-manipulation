@@ -48,8 +48,8 @@ const favsContainer = document.getElementById('favs');
 
 // Your code goes here
 function updateCollections(id, direction) {
-  const item = document.getElementById(`${id}`);
-
+  const item = document.getElementById(id);
+  const icon = item.querySelector('i')
   if (!item) {
     console.error(`Item with the id of 'item${id} was not found'`);
     return;
@@ -57,16 +57,15 @@ function updateCollections(id, direction) {
 
   if (direction === 'toMain') {
     mainContainer.appendChild(item);
-    item.classList.remove('fa-heart-crack');
-    item.classList.add('fa-heart-circle-plus');
+    icon.classList.remove('fa-heart-crack');
+    icon.classList.add('fa-heart-circle-plus');
   } else if (direction === 'toFavs') {
     favsContainer.appendChild(item);
-    item.classList.remove('fa-heart-circle-plus');
-    item.classList.add('fa-heart-crack');
+    icon.classList.remove('fa-heart-circle-plus');
+    icon.classList.add('fa-heart-crack');
   } else {
     console.error(`Invalid direction, use toMain or toFavs`);
   }
-
 }
 
 
@@ -87,7 +86,22 @@ function updateCollections(id, direction) {
 // Your code goes here...
 
 allItems.forEach((item) => {
-  
-})
+  item.addEventListener('click', (e) => {
+    const currentItem = e.target.closest('.item');
+    const itemId = currentItem.id;
+    const currentParentId = currentItem.parentNode.id;
+    let direction;
+
+    if (currentParentId === 'main') {
+      direction = 'toFavs';
+    } else if (currentParentId === 'favs') {
+      direction = 'toMain';
+    } else {
+      return;
+    }
+
+    updateCollections(itemId, direction);
+  });
+});
 
 
