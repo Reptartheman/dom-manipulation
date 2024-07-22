@@ -40,16 +40,56 @@
 // Your code goes here...
 
 const cardsContainer = document.querySelector('.cardsContainer');
-const allCards = document.querySelectorAll('.item');
-const cardsArray = Array.from(allCards);
-const getFavorites = localStorage.getItem('favorites');
 
-function changeBackgroundColor(e) {
-  const card = e.target
+function init() {
+  const favorites = localStorage.getItem('favorites');
+  if (favorites) {
+    const favoritesArray = favorites.split(',').filter(Boolean);
+    favoritesArray.forEach(id => {
+      const item = document.getElementById(id);
+      if (item) {
+        item.classList.add('red');
+      }
+    });
+  }
+}
 
-  localStorage.setItem('favorite', card.id);
+
+function callback(e) {
+  const card = e.target.closest('.card');
+
+  if(!card) return;
+
+
+  if (card.classList.contains('red')) {
+    card.classList.remove('red');
+    removeLocalStorageItem(card.id);
+  } else {
+    card.classList.add('red');
+    addLocalStorageItem(card.id);
+  }
+  
+}
+
+function addLocalStorageItem(id) {
+  let favorites = localStorage.getItem('favorites');
+  favorites = favorites ? favorites.split(',') : [];
+  if (!favorites.includes(id)) {
+    favorites.push(id);
+    localStorage.setItem('favorites', favorites.join(','));
+  }
 
 }
 
-cardsContainer.addEventListener('click', changeBackgroundColor);
+function removeLocalStorageItem(id) {
+  let favorites = localStorage.getItem('favorites');
+  if (favorites) {
+    favorites = favorites.split(',').filter(favoriteId => favoriteId !== id);
+    localStorage.setItem('favorites', favorites.join(','));
+  }
+}
+
+init();
+
+cardsContainer.addEventListener('click', callback);
 
